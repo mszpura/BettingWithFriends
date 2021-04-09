@@ -4,49 +4,56 @@ open System
 
 type MatchId = MatchId of Guid
 
-type PointScoredBy =
-  | HomePlayer of TeamMemberId
-  | AwayPlayer of TeamMemberId
-
 type Point = {
-  ScoredBy: PointScoredBy
+  TeamId: TeamId
+  TeamMemberId: TeamMemberId
   MinuteOfMatch: int
-}
+} 
 
 type MatchWinner =
   | Home
   | Away
   | Draw
 
-type PlayedMatch = {
-  HomePoints: Point list
-  AwayPoints: Point list
-  EndDate: DateTime option
-} with
-  member this.Winner =
-    match (this.HomePoints.Length, this.AwayPoints.Length) with
-    | home, away when home > away -> MatchWinner.Home
-    | home, away when home < away -> MatchWinner.Away
-    | home, away when home = away -> MatchWinner.Draw
-    | _ -> failwith "No match result could be found."
-    
-type MatchStatus =
-  | NotPlayed
-  | Played of PlayedMatch
-  | Canceled
-  
-type Match = {
+type MatchInfo = {
   MatchId: MatchId
   TournamentId: TournamentId
   Home: Team
   Away: Team
   StartDate: DateTime
-  MatchStatus: MatchStatus
 }
 
+type InProgressMatch = {
+  MatchInfo: MatchInfo
+  Points: Point list
+}
+
+type MatchEndDate = MatchEndDate of DateTime
+
+type PlayedMatch = {
+  MatchInfo: MatchInfo
+  Points: Point list
+  EndDate: MatchEndDate
+} with
+  member this.Score =
+    let homePoints, awayPoints =
+      this.Points |> List.partition (fun point -> point.TeamId = this.MatchInfo.Home.TeamId)
+    homePoints.Length, awayPoints.Length
+    
+  member this.Winner =
+    match this.Score with
+    | home, away when home > away -> MatchWinner.Home
+    | home, away when home < away -> MatchWinner.Away
+    | home, away when home = away -> MatchWinner.Draw
+    | _ -> failwith "No match result could be found."
+
+type Match =
+  | NotStarted of MatchInfo
+  | InProgress of InProgressMatch
+  | Played of PlayedMatch
+
 module Matches =
-  let appendPoint (point: Point) (playingMatch: Match) =
-    match point.ScoredBy with
-    | PointScoredBy.HomePlayer homePlayer ->
+  let appendPoint (point: Point) (inProgressMatch: InProgressMatch) =
+    { inProgressMatch with Points = point :: inProgressMatch.Points }
       
     

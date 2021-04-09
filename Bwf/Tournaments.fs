@@ -3,6 +3,7 @@
 open System
 
 type TournamentId = TournamentId of Guid
+type TeamId = TeamId of Guid
 type TeamMemberId = TeamMemberId of Guid
 
 type TeamMember = {
@@ -12,6 +13,7 @@ type TeamMember = {
 }
 
 type Team = {
+  TeamId: TeamId
   Name: string
   Members: TeamMember list
 }
