@@ -16,7 +16,10 @@ type Team = {
   TeamId: TeamId
   Name: string
   Members: TeamMember list
-}
+} with
+  member this.isMemberInTeam memberToFind =
+    let result = this.Members |> List.tryFind (fun teamMember -> teamMember = memberToFind)
+    result.IsSome
 
 type Tournament = {
   TournamentId: TournamentId

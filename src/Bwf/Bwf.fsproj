@@ -6,7 +6,7 @@
 
     <ItemGroup>
         <Compile Include="Tournaments.fs" />
-        <Compile Include="Matches.fs" />
+        <Compile Include="Games.fs" />
         <Compile Include="Bets.fs" />
     </ItemGroup>
 
