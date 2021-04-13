@@ -3,5 +3,10 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.BetsTests.Creates a Bet for not started Game&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.BetsTests.Creates a Bet fails when typed Scorer is not in any team played in a Game&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.BetsTests.Calculates earned points from predicted game score&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.BetsTests.Calculates earned points from predicted scored player&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.BetsTests.Calculates 0 points when bet not predicting anything&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.GamesTests.Creates a game with correct data&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.GamesTests.Finished game should have correct data&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

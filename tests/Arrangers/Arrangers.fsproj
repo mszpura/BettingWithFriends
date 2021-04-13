@@ -5,10 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Include="Test_TeamMember.fs" />
-      <Compile Include="Test_Team.fs" />
-      <Compile Include="Test_Game.fs" />
-      <Compile Include="Test_User.fs" />
+      <Compile Include="Some_Points.fs" />
+      <Compile Include="A_Game_NotStarted.fs" />
+      <Compile Include="A_Game_Finished.fs" />
     </ItemGroup>
 
     <ItemGroup>

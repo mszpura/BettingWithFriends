@@ -5,9 +5,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Tournaments.fs" />
-        <Compile Include="Games.fs" />
-        <Compile Include="Bets.fs" />
+        <Compile Include="SharedTypes.fs" />
+        <Compile Include="Group.fs" />
+        <Compile Include="Game.fs" />
+        <Compile Include="Bet.fs" />
     </ItemGroup>
 
 </Project>
