@@ -8,6 +8,8 @@
       <Compile Include="Some_Points.fs" />
       <Compile Include="A_Game_NotStarted.fs" />
       <Compile Include="A_Game_Finished.fs" />
+      <Compile Include="A_Tournament.fs" />
+      <Compile Include="An_User.fs" />
     </ItemGroup>
 
     <ItemGroup>

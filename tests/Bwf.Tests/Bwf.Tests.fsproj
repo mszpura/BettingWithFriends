@@ -11,6 +11,7 @@
         <Compile Include="BetsTests.fs" />
         <Compile Include="GamesTests.fs" />
         <Compile Include="Program.fs" />
+        <Compile Include="GroupsTests.fs" />
     </ItemGroup>
 
     <ItemGroup>
