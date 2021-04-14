@@ -36,7 +36,7 @@ module Groups =
   let private validateUserExistInGroup userIdToAdd group =
     let userFound = group.Users |> List.tryFind (fun user -> user.UserId = userIdToAdd)
     match userFound with
-    | Some _ -> failwith "User is already added to group"
+    | Some _ -> failwith "User is already in the group"
     | None -> ()
     
   let appendUser userId userName group =
@@ -51,7 +51,7 @@ module Groups =
   let private replaceUser user list =
     list |> List.map (fun oldUser -> if oldUser.UserId = user.UserId then user else oldUser)
     
-  let addTypedScorerToUser typedScorerId userId (group: Group) =
+  let chooseTypedScorerByUser typedScorerId userId (group: Group) =
     let userOption = group.Users |> List.tryFind (fun user -> user.UserId = userId)
     let user = match userOption with
                | Some user -> { user with TypedTopScorer = typedScorerId |> Some }

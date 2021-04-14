@@ -8,5 +8,8 @@ module An_User =
     { UserId = Guid.NewGuid() |> UserId
       Name = $"{Guid.NewGuid()}"
       IsOwner = false
-      TypedTopScorer = Guid.NewGuid() |> PlayerId |> Some }
+      TypedTopScorer = None }
+    
+  let ``with an UserId`` userId (user: User) =
+    { user with UserId = userId }
 

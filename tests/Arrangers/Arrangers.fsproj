@@ -10,6 +10,7 @@
       <Compile Include="A_Game_Finished.fs" />
       <Compile Include="A_Tournament.fs" />
       <Compile Include="An_User.fs" />
+      <Compile Include="A_Group.fs" />
     </ItemGroup>
 
     <ItemGroup>
