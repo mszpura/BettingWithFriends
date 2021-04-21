@@ -22,4 +22,3 @@ module A_Game_Finished =
     
   let ``as a Game`` game =
     game |> Game.Finished
-

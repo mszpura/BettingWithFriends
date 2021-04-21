@@ -11,4 +11,3 @@ module A_Tournament =
     
   let ``with a Start Date`` startDate (tournament: Tournament) =
     { tournament with StartDate = startDate }
-

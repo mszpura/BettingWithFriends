@@ -19,4 +19,3 @@ module A_Game_NotStarted =
     
   let ``as a game`` game =
     game |> Game.NotStarted
-  
