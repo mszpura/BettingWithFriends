@@ -1,12 +1,5 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\maciej.szpura\AppData\Local\JetBrains\Rider2021.1\resharper-host\temp\Rider\vAny\CoverageData\_Bwf.-2073466410\Snapshot\snapshot.utdcvr</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4cd30516_002D9b99_002D4c86_002D9178_002Dbc51c1e0f3f5/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Creates a Bet for not started Game" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.BetsTests.Creates a Bet for not started Game&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.BetsTests.Creates a Bet fails when typed Scorer is not in any team played in a Game&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.BetsTests.Calculates earned points from predicted game score&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.BetsTests.Calculates earned points from predicted scored player&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.BetsTests.Calculates 0 points when bet not predicting anything&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.GamesTests.Creates a game with correct data&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::914FACF8-5FFC-4003-85D0-D8394C530847::net5.0::Bwf.Tests.GamesTests.Finished game should have correct data&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
