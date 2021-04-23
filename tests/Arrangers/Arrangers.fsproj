@@ -15,6 +15,7 @@
       <Compile Include="A_GroupUser.fs" />
       <Compile Include="A_Group.fs" />
       <Compile Include="An_User.fs" />
+      <Compile Include="A_Group.fs" />
     </ItemGroup>
 
     <ItemGroup>
