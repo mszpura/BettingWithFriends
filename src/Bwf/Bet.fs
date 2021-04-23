@@ -1,8 +1,5 @@
 ﻿namespace Bwf
 
-type Email = Email of string
-type Password = Password of string
-
 type PointsToWin =
   { PointsForCorrectWinner: int
     PointsForCorrectScorer: int

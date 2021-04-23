@@ -2,33 +2,33 @@
 
 open System
 
-type User =
+type GroupUser =
   { UserId: UserId
-    Name: string
+    Name: NotEmptyString
     IsOwner: bool
     TypedTopScorer: PlayerId option }
 
 type Group =
   { GroupId: GroupId
-    Name: string
-    Users: User list
+    Name: NotEmptyString
+    Users: GroupUser list
     TournamentId: TournamentId }
 
 type Tournament =
   { TournamentId: TournamentId
-    Name: string
+    Name: NotEmptyString
     StartDate: DateTime }
 
 module Groups =
-  let create name ownerId ownerName tournament =
+  let create name (owner: User) tournament =
     match tournament.StartDate with
     | startDate when startDate < DateTime.Now -> failwith "Tournament already started"
     | _ -> ()
     { GroupId = Guid.NewGuid() |> GroupId
       Name = name
       Users =
-        [ { UserId = ownerId
-            Name = ownerName
+        [ { UserId = owner.UserId
+            Name = owner.Username
             IsOwner = true
             TypedTopScorer = None } ]
       TournamentId = tournament.TournamentId }
@@ -39,11 +39,11 @@ module Groups =
     | Some _ -> failwith "User is already in the group"
     | None -> ()
     
-  let appendUser userId userName group =
-    group |> validateUserExistInGroup userId 
+  let appendUser (user: User) group =
+    group |> validateUserExistInGroup user.UserId 
     let user =
-      { UserId = userId
-        Name = userName
+      { UserId = user.UserId
+        Name = user.Username
         IsOwner = false
         TypedTopScorer = None }
     { group with Users = user :: group.Users }
@@ -51,7 +51,7 @@ module Groups =
   let private replaceUser user list =
     list |> List.map (fun oldUser -> if oldUser.UserId = user.UserId then user else oldUser)
     
-  let chooseTypedScorerByUser typedScorerId userId (group: Group) =
+  let addTypedScorerToUser typedScorerId userId (group: Group) =
     let userOption = group.Users |> List.tryFind (fun user -> user.UserId = userId)
     let user = match userOption with
                | Some user -> { user with TypedTopScorer = typedScorerId |> Some }

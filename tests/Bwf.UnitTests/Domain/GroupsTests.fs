@@ -1,4 +1,4 @@
-﻿namespace Bwf.Tests
+﻿namespace Bwf.UnitTests.Domain
 
 open System
 open Arrangers
@@ -7,6 +7,7 @@ open Xunit
 open FsUnit.Xunit
 open A_Tournament
 open A_Group
+open A_GroupUser
 open An_User
 
 module GroupsTests =
@@ -14,65 +15,61 @@ module GroupsTests =
   let ``Creates a group for not started Tournament`` () =
     // Arrange
     let tournament = ``a tournament``() |> ``with a Start Date`` (DateTime.Today.AddDays(1.0))
-    let name = $"{Guid.NewGuid()}"
-    let username = $"{Guid.NewGuid()}"
-    let userId = Guid.NewGuid() |> UserId
+    let name = $"{Guid.NewGuid()}" |> NotEmptyString.create
+    let user = ``an User``()
     // Act
-    let result = Groups.create name userId username tournament
+    let result = Groups.create name user tournament
     // Assert
     result.TournamentId |> should equal tournament.TournamentId
     result.Name |> should equal name 
     result.Users.Length |> should equal 1
-    let user = result.Users.Head
-    user.Name |> should equal username
-    user.IsOwner |> should equal true
-    user.TypedTopScorer |> should equal None
-    user.UserId |> should equal userId
+    let createdUser = result.Users.Head
+    createdUser.Name |> should equal user.Username
+    createdUser.IsOwner |> should equal true
+    createdUser.TypedTopScorer |> should equal None
+    createdUser.UserId |> should equal user.UserId
     
   [<Fact>]
   let ``Throws error when tournament already started`` () =
     // Arrange
     let tournament = ``a tournament``() |> ``with a Start Date`` DateTime.Now
-    let name = $"{Guid.NewGuid()}"
-    let username = $"{Guid.NewGuid()}"
-    let userId = Guid.NewGuid() |> UserId
+    let name = $"{Guid.NewGuid()}" |> NotEmptyString.create
+    let user = ``an User``()
     // Act & Assert
-    (fun () -> Groups.create name userId username tournament |> ignore)
+    (fun () -> Groups.create name user tournament |> ignore)
     |> should (throwWithMessage "Tournament already started") typeof<Exception>
     
   [<Fact>]
   let ``Append new user to group`` () =
     // Arrange
     let group = ``a Group``()
-    let userId = Guid.NewGuid() |> UserId
-    let name = $"{Guid.NewGuid()}"
+    let user = ``an User``()
     // Act
-    let group = group |> Groups.appendUser userId name
+    let group = group |> Groups.appendUser user
     // Assert
     group.Users |> should haveLength 2
-    let newUser = group.Users |> List.find (fun user -> user.UserId = userId)
+    let newUser = group.Users |> List.find (fun user -> user.UserId = user.UserId)
     newUser.IsOwner |> should equal false
-    newUser.Name |> should equal name
+    newUser.Name |> should equal user.Username
     newUser.TypedTopScorer |> should equal None
     
   [<Fact>]
   let ``Append throws when user already is in group`` () =
     // Arrange
-    let userId = Guid.NewGuid() |> UserId
-    let name = $"{Guid.NewGuid()}"
-    let group = ``a Group``() |> ``with an User`` (``an User``() |> ``with an UserId`` userId)
+    let user = ``an User``()
+    let group = ``a Group``() |> ``with an User`` (``a Group User``() |> A_GroupUser.``with an UserId`` user.UserId)
     // Act & Assert
-    (fun () -> group |> Groups.appendUser userId name |> ignore)
+    (fun () -> group |> Groups.appendUser user |> ignore)
     |> should (throwWithMessage "User is already in the group") typeof<Exception>
     
   [<Fact>]
   let ``Choosing typed scorer by User`` () =
     // Arrange
     let userId = Guid.NewGuid() |> UserId
-    let group = ``a Group``() |> ``with an User`` (``an User``() |> ``with an UserId`` userId)
+    let group = ``a Group``() |> ``with an User`` (``a Group User``() |> A_GroupUser.``with an UserId`` userId)
     let typedScorer = Guid.NewGuid() |> PlayerId
     // Act
-    let group = group |> Groups.chooseTypedScorerByUser typedScorer userId
+    let group = group |> Groups.addTypedScorerToUser typedScorer userId
     // Assert
     let user = group.Users |> List.find (fun user -> user.UserId = userId)
     match user.TypedTopScorer with

@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Include="Domain\BetsTests.fs" />
+      <Compile Include="Domain\GamesTests.fs" />
+      <Compile Include="Domain\GroupsTests.fs" />
+      <Compile Include="Application\CreateUserHandlerTests.fs" />
+      <Compile Include="Application\CreateGroupHandlerTests.fs" />
+      <Compile Include="Application\JoinToGroupHandlerTests.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FsUnit.xUnit" Version="4.0.4" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+      <PackageReference Include="xunit" Version="2.4.1" />
+      <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Bwf\Bwf.fsproj" />
+      <ProjectReference Include="..\Arrangers\Arrangers.fsproj" />
+    </ItemGroup>
+
+</Project>

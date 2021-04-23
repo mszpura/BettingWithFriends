@@ -6,9 +6,8 @@ open Bwf
 module An_User =
   let ``an User`` () =
     { UserId = Guid.NewGuid() |> UserId
-      Name = $"{Guid.NewGuid()}"
-      IsOwner = false
-      TypedTopScorer = None }
+      Username = $"{Guid.NewGuid()}" |> NotEmptyString.create
+      Password = $"{Guid.NewGuid()}M1#" |> Password.create }
     
   let ``with an UserId`` userId (user: User) =
     { user with UserId = userId }

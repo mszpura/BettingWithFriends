@@ -1,4 +1,4 @@
-﻿namespace Bwf.Tests
+﻿namespace Bwf.UnitTests.Domain
 
 open System
 open Arrangers

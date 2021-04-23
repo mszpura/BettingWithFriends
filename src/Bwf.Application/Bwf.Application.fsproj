@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Include="Commands.fs" />
+      <Compile Include="CommandHandlers\CreateUserHandler.fs" />
+      <Compile Include="CommandHandlers\CreateGroupHandler.fs" />
+      <Compile Include="CommandHandlers\JoinToGroupHandler.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Bwf\Bwf.fsproj" />
+    </ItemGroup>
+
+</Project>
