@@ -14,11 +14,6 @@ type Group =
     Users: GroupUser list
     TournamentId: TournamentId }
 
-type Tournament =
-  { TournamentId: TournamentId
-    Name: NotEmptyString
-    StartDate: DateTime }
-
 module Groups =
   let create name (owner: User) tournament =
     match tournament.StartDate with

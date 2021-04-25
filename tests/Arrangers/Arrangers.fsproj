@@ -9,6 +9,7 @@
       <Compile Include="Commands\A_CreateGroupCommand.fs" />
       <Compile Include="Commands\A_JoinToGroupCommand.fs" />
       <Compile Include="Commands\An_AddTopScorerCommand.fs" />
+      <Compile Include="Commands\A_CreateGameCommand.fs" />
       <Compile Include="Some_Points.fs" />
       <Compile Include="A_Game_NotStarted.fs" />
       <Compile Include="A_Game_Finished.fs" />
@@ -16,6 +17,7 @@
       <Compile Include="A_GroupUser.fs" />
       <Compile Include="A_Group.fs" />
       <Compile Include="An_User.fs" />
+      <Compile Include="A_Team.fs" />
       <Compile Include="A_Group.fs" />
     </ItemGroup>
 

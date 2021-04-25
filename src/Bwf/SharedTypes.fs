@@ -27,6 +27,22 @@ type Score =
     | home, away when home = away -> GameWinner.Draw
     | _ -> failwith "No game result could be found."
     
+type Player =
+  { PlayerId: PlayerId
+    TeamId: TeamId
+    Name: NotEmptyString
+    Number: int }
+    
+type Team =
+  { TeamId: TeamId
+    TournamentId: TournamentId
+    Name: NotEmptyString }
+        
+type Tournament =
+  { TournamentId: TournamentId
+    Name: NotEmptyString
+    StartDate: DateTime }
+    
 module NotEmptyString =
   let create string =
     match String.IsNullOrWhiteSpace(string) with

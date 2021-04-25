@@ -35,11 +35,11 @@ type Game =
   | Finished of FinishedGame
 
 module Games =
-  let create id homeId awayId tournamentId startDate =
-    { GameId = id
-      TournamentId = tournamentId
-      HomeId = homeId
-      AwayId = awayId
+  let create (home: Team) (away: Team) startDate (tournament: Tournament) =
+    { GameId = Guid.NewGuid() |> GameId
+      TournamentId = tournament.TournamentId
+      HomeId = home.TeamId
+      AwayId = away.TeamId
       StartDate = startDate }
   
   let finish points endDate (game: NotStartedGame) =

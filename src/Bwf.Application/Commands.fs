@@ -21,6 +21,17 @@ type AddTopScorer =
     GroupId: GroupId
     TypedTopScorerId: PlayerId }
   
+type CreateGame =
+  { TournamentId: TournamentId
+    HomeId: TeamId
+    AwayId: TeamId
+    StartDate: DateTime }
+
+type FinishGame =
+  { GameId: GameId
+    Points: Point list
+    EndDate: DateTime }
+  
 type CreateTournament =
   { TournamentName: string
     StartDate: DateTime }

@@ -10,6 +10,7 @@
       <Compile Include="CommandHandlers\CreateGroupHandler.fs" />
       <Compile Include="CommandHandlers\JoinToGroupHandler.fs" />
       <Compile Include="CommandHandlers\AddTopScorerHandler.fs" />
+      <Compile Include="CommandHandlers\CreateGameHandler.fs" />
     </ItemGroup>
 
     <ItemGroup>
