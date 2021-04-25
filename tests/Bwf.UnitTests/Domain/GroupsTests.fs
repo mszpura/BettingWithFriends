@@ -69,7 +69,7 @@ module GroupsTests =
     let group = ``a Group``() |> ``with an User`` (``a Group User``() |> A_GroupUser.``with an UserId`` userId)
     let typedScorer = Guid.NewGuid() |> PlayerId
     // Act
-    let group = group |> Groups.addTypedScorerToUser typedScorer userId
+    let group = group |> Groups.chooseTypedScorerByUser typedScorer userId
     // Assert
     let user = group.Users |> List.find (fun user -> user.UserId = userId)
     match user.TypedTopScorer with

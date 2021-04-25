@@ -11,6 +11,7 @@
       <Compile Include="Application\CreateUserHandlerTests.fs" />
       <Compile Include="Application\CreateGroupHandlerTests.fs" />
       <Compile Include="Application\JoinToGroupHandlerTests.fs" />
+      <Compile Include="Application\AddTopScorerHandlerTests.fs" />
     </ItemGroup>
 
     <ItemGroup>

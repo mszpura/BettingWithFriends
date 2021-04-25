@@ -8,6 +8,7 @@
       <Compile Include="Commands\A_CreateUserCommand.fs" />
       <Compile Include="Commands\A_CreateGroupCommand.fs" />
       <Compile Include="Commands\A_JoinToGroupCommand.fs" />
+      <Compile Include="Commands\An_AddTopScorerCommand.fs" />
       <Compile Include="Some_Points.fs" />
       <Compile Include="A_Game_NotStarted.fs" />
       <Compile Include="A_Game_Finished.fs" />

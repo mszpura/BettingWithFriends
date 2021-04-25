@@ -18,7 +18,8 @@ type JoinToGroup =
   
 type AddTopScorer =
   { UserId: UserId
-    TypedTopScorer: PlayerId }
+    GroupId: GroupId
+    TypedTopScorerId: PlayerId }
   
 type CreateTournament =
   { TournamentName: string

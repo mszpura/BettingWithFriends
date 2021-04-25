@@ -13,6 +13,8 @@ module JoinToGroupHandler =
     async {
       let! group = command.GroupId |> io.GetGroup
       let! user = command.UserId |> io.GetUser
-      let group = group |> Groups.appendUser user
-      do! group |> io.SaveGroup
+      
+      do! group
+          |> Groups.appendUser user
+          |> io.SaveGroup
     }
