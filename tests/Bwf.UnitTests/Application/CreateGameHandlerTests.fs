@@ -13,7 +13,7 @@ module CreateGameHandlerTests =
   [<Fact>]
   let ``Creates a Game in given Tournament``() =
     // Arrange
-    let mutable expectedGame: NotStartedGame option = None
+    let mutable expectedGame: OpenGame option = None
     let command = ``a Create Game Command``()
     let home = ``a team``()
                |> ``with TeamId`` command.HomeId
@@ -31,7 +31,7 @@ module CreateGameHandlerTests =
                          | _ -> failwith "Team not found" }
         SaveGame = fun game ->
           async { expectedGame <- match game with
-                                  | Game.NotStarted game -> Some game
+                                  | Game.Open game -> Some game
                                   | Game.Finished _ -> failwith "Game is finished" } }
     // Act
     command |> handle io |> Async.RunSynchronously

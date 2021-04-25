@@ -4,7 +4,7 @@ open Bwf
 open Bwf.Application.CommandHandlers.FinishGameHandler
 open FsUnit.Xunit
 open Xunit
-open Arrangers.A_Game_NotStarted
+open Arrangers.An_Open_Game
 open Arrangers.Commands.A_FinishedGameCommand
 
 module FinishGameHandlerTests =
@@ -14,10 +14,10 @@ module FinishGameHandlerTests =
     // Arrange
     let mutable expectedGame: Game option = None 
     let command = ``a Finished Game Command``()
-    let game = ``a not started Game``()
+    let game = ``an Open Game``()
                |> ``wih gameId`` command.GameId
     let io =
-      { GetGame = fun _ -> async { return game |> Game.NotStarted }
+      { GetGame = fun _ -> async { return game |> Game.Open }
         SaveGame = fun game -> async { expectedGame <- Some game } }
     // Act
     command |> handle io |> Async.RunSynchronously
@@ -25,7 +25,7 @@ module FinishGameHandlerTests =
     let game = match expectedGame with
                | None -> failwith "Game not found"
                | Some game -> match game with
-                              | Game.NotStarted _ -> failwith "Game is still not finished"
+                              | Game.Open _ -> failwith "Game is still not finished"
                               | Game.Finished game -> game
     game.GameId |> should equal command.GameId
     game.EndDate |> should equal command.EndDate

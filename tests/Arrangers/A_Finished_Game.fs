@@ -5,7 +5,7 @@ open Bwf
 open Some_Points
 open A_Tournament
 
-module A_Game_Finished =
+module A_Finished_Game =
   let ``a Finished Game`` () =
     { GameId = Guid.NewGuid() |> GameId
       Tournament = ``a tournament``()

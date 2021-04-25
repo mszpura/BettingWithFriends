@@ -18,6 +18,6 @@ module CreateGameHandler =
           |> io.GetTournament
           |> Async.RunSynchronously
           |> Games.create homeTeam awayTeam command.StartDate
-          |> Game.NotStarted
+          |> Game.Open
           |> io.SaveGame
     }

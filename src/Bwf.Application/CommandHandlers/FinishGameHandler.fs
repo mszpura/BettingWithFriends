@@ -12,7 +12,7 @@ module FinishGameHandler =
     async {
       let! game = command.GameId |> io.GetGame
       let game = match game with
-                 | Game.NotStarted game -> game
+                 | Game.Open game -> game
                  | Game.Finished _ -> failwith "Game is already finished."
                  
       do! game

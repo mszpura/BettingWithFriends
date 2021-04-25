@@ -1,38 +1,43 @@
 ﻿namespace Bwf
 
-type Bet =
-  { BetId: BetId
-    GameId: GameId
-    UserId: UserId
-    TypedScore: Score
-    TypedScorerId: PlayerId } 
+open System
 
-type BetResult = BetResult of int
+type UserBetDetails =
+  { UserId: UserId
+    Score: Score
+    ScorerId: PlayerId }
+
+type OpenBet =
+  { BetId: BetId
+    Game: OpenGame
+    Details: UserBetDetails }
+  
+type FinishedBet =
+  { BetId: BetId
+    Game: FinishedGame
+    Details: UserBetDetails }
+  with
+  member this.GotPointsForWinner =
+    this.Details.Score.Winner = this.Game.Result.Score.Winner
+  member this.GotPointsForScore =
+    this.Details.Score = this.Game.Result.Score
+  member this.GotPointsForScorer =
+    this.Game.Result.Points |> List.exists (fun point -> point.PlayerId = this.Details.ScorerId)
+  member this.ScoredPoints =
+    let pointsForWinner = if this.GotPointsForWinner then this.Game.Tournament.Settings.PointsForCorrectWinner else 0
+    let pointsForScore = if this.GotPointsForScore then this.Game.Tournament.Settings.PointsForCorrectGameScore else 0
+    let pointsForScorer = if this.GotPointsForScorer then this.Game.Tournament.Settings.PointsForCorrectScorer else 0
+    pointsForWinner + pointsForScore + pointsForScorer
+
+type Bet =
+  | Open of OpenBet
+  | Finished of FinishedBet
 
 module Bets =
-  let create id gameId userId typedScore typedScorerId =
-    { BetId = id
-      UserId = userId
-      GameId = gameId
-      TypedScore = typedScore
-      TypedScorerId = typedScorerId }  
-    
-  let private calculatePointsForTypedScorer (finishedGame: FinishedGame) bet =
-    let player = finishedGame.Result.ScoredPlayers |> List.tryFind (fun playerId -> playerId = bet.TypedScorerId)
-    match player with
-    | Some _ ->  finishedGame.Tournament.Settings.PointsForCorrectScorer
-    | None -> 0
-    
-  let private calculatePointsForTypedScore (finishedGame: FinishedGame) bet =
-    if bet.TypedScore =
-      finishedGame.Result.Score then finishedGame.Tournament.Settings.PointsForCorrectGameScore else 0
-    
-  let private calculatePointsForTypedWinner (finishedGame: FinishedGame) bet =
-    if bet.TypedScore.Winner =
-      finishedGame.Result.Score.Winner then finishedGame.Tournament.Settings.PointsForCorrectWinner else 0
-    
-  let finishBet finishedGame bet =
-    let points = calculatePointsForTypedWinner finishedGame bet +
-                 calculatePointsForTypedScore finishedGame bet +
-                 calculatePointsForTypedScorer finishedGame bet
-    points |> BetResult
+  let create typedScore typedScorerId game (user: User): OpenBet =
+    { BetId = Guid.NewGuid() |> BetId
+      Game = game
+      Details =
+        { UserId = user.UserId
+          Score = typedScore
+          ScorerId = typedScorerId } }

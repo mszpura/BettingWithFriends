@@ -4,8 +4,10 @@ open System
 open Arrangers
 open Bwf
 open Xunit
-open A_Game_Finished
+open A_Finished_Game
 open FsUnit.Xunit
+open An_User
+open An_Open_Game
 
 module BetsTests =
   [<Fact>]
@@ -13,17 +15,16 @@ module BetsTests =
     // Arrange
     let typedScore = { Home = 3; Away = 2 }
     let typedScorer = Guid.NewGuid() |> PlayerId
-    let gameId = Guid.NewGuid() |> GameId
-    let betId = Guid.NewGuid() |> BetId
-    let userId = Guid.NewGuid() |> UserId
+    let game = ``an Open Game``()
+    let user = ``an User``()
     // Act
-    let result = Bets.create betId gameId userId typedScore typedScorer
+    let result = user |> Bets.create typedScore typedScorer game
     // Assert
-    result.UserId |> should equal userId
-    result.BetId |> should equal betId
-    result.GameId |> should equal gameId
-    result.TypedScore |> should equal typedScore
-    result.TypedScorerId |> should equal typedScorer
+    result.Details.UserId |> should equal user.UserId
+    result.BetId |> should not' (be Null)
+    result.Game |> should equal game
+    result.Details.Score |> should equal typedScore
+    result.Details.ScorerId |> should equal typedScorer
       
   [<Theory>]
   [<InlineData(2, 1, 2, 1, 4)>]
@@ -40,45 +41,54 @@ module BetsTests =
     expectedPointsEarned
     =
     // Arrange
-    let betId = Guid.NewGuid() |> BetId
-    let userId = Guid.NewGuid() |> UserId
     let typedScorer = Guid.NewGuid() |> PlayerId
     let scorePredicted = { Home = homeScorePredicted; Away = awayScorePredicted }
     let game = ``a Finished Game`` ()
                |> ``with a Score`` { Home = homeScore; Away = awayScore }
-    let bet = Bets.create betId game.GameId userId scorePredicted typedScorer
     // Act
-    let (BetResult points) = bet |> Bets.finishBet game
+    let finishedBet: FinishedBet =
+      { BetId = Guid.NewGuid() |> BetId
+        Game = game
+        Details =
+          { UserId = Guid.NewGuid() |> UserId
+            Score = scorePredicted
+            ScorerId = typedScorer }}
     // Assert 
-    points |> should equal expectedPointsEarned
+    finishedBet.ScoredPoints |> should equal expectedPointsEarned
     
   [<Fact>]
   let ``Calculates earned points from predicted scored player`` () =
     // Arrange
-    let betId = Guid.NewGuid() |> BetId
-    let userId = Guid.NewGuid() |> UserId
     let predictedScorer = Guid.NewGuid() |> PlayerId
     let points = [{ PlayerId = predictedScorer; TeamSide = TeamSide.Away }]
     let game = ``a Finished Game`` ()
                |> ``with some Points`` points
     let notPredictedScore = { Home = 3; Away = 0 }
-    let bet = Bets.create betId game.GameId userId notPredictedScore predictedScorer
     // Act
-    let (BetResult points) = bet |> Bets.finishBet game
+    let finishedBet: FinishedBet =
+      { BetId = Guid.NewGuid() |> BetId
+        Game = game
+        Details =
+          { UserId = Guid.NewGuid() |> UserId
+            Score = notPredictedScore
+            ScorerId = predictedScorer }}
     // Assert 
-    points |> should equal game.Tournament.Settings.PointsForCorrectScorer
+    finishedBet.ScoredPoints |> should equal game.Tournament.Settings.PointsForCorrectScorer
     
   [<Fact>]
   let ``Calculates 0 points when bet not predicting anything`` () =
     // Arrange
-    let betId = Guid.NewGuid() |> BetId
-    let userId = Guid.NewGuid() |> UserId
     let predictedScorer = Guid.NewGuid() |> PlayerId
     let game = ``a Finished Game`` ()
                |> ``with a Score`` { Home = 0; Away = 3 }
     let notPredictedScore = { Home = 3; Away = 0 }
-    let bet = Bets.create betId game.GameId userId notPredictedScore predictedScorer
     // Act
-    let (BetResult points) = bet |> Bets.finishBet game
+    let finishedBet: FinishedBet =
+      { BetId = Guid.NewGuid() |> BetId
+        Game = game
+        Details =
+          { UserId = Guid.NewGuid() |> UserId
+            Score = notPredictedScore
+            ScorerId = predictedScorer }}
     // Assert 
-    points |> should equal 0
+    finishedBet.ScoredPoints |> should equal 0

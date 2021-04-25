@@ -18,7 +18,7 @@ type Result =
   member this.ScoredPlayers =
     this.Points |> List.map (fun point -> point.PlayerId) |> List.distinct
 
-type NotStartedGame = {
+type OpenGame = {
   GameId: GameId
   Tournament: Tournament
   HomeId: TeamId
@@ -34,7 +34,7 @@ type FinishedGame = {
 } 
 
 type Game =
-  | NotStarted of NotStartedGame
+  | Open of OpenGame
   | Finished of FinishedGame
 
 module Games =
@@ -45,7 +45,7 @@ module Games =
       AwayId = away.TeamId
       StartDate = startDate }
   
-  let finish points endDate (game: NotStartedGame) =
+  let finish points endDate (game: OpenGame) =
     { GameId = game.GameId
       Tournament = game.Tournament
       EndDate = endDate
