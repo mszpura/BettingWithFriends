@@ -11,6 +11,7 @@
       <Compile Include="CommandHandlers\JoinToGroupHandler.fs" />
       <Compile Include="CommandHandlers\AddTopScorerHandler.fs" />
       <Compile Include="CommandHandlers\CreateGameHandler.fs" />
+      <Compile Include="CommandHandlers\FinishGameHandler.fs" />
     </ItemGroup>
 
     <ItemGroup>

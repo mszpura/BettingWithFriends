@@ -7,7 +7,12 @@ module A_Tournament =
   let ``a tournament`` () =
     { TournamentId = Guid.NewGuid() |> TournamentId
       Name = $"{Guid.NewGuid()}" |> NotEmptyString.create
-      StartDate = DateTime.Today }
+      StartDate = DateTime.Today
+      Settings =
+        { PointsForCorrectWinner = 1
+          PointsForCorrectScorer = 2
+          PointsForCorrectGameScore = 3
+          PointsForTypedTopScorer = 8 } }
     
   let ``with a Start Date`` startDate (tournament: Tournament) =
     { tournament with StartDate = startDate }

@@ -42,4 +42,4 @@ module CreateGameHandlerTests =
     game.HomeId |> should equal command.HomeId
     game.AwayId |> should equal command.AwayId
     game.StartDate |> should equal command.StartDate
-    game.TournamentId |> should equal command.TournamentId
+    game.Tournament.TournamentId |> should equal command.TournamentId

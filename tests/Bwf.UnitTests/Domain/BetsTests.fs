@@ -8,11 +8,6 @@ open A_Game_Finished
 open FsUnit.Xunit
 
 module BetsTests =
-  let private PointsToWin =
-    { PointsForCorrectWinner = 1
-      PointsForCorrectScorer = 2
-      PointsForCorrectGameScore = 3 }
-  
   [<Fact>]
   let ``Creates a Bet for not started Game`` () =
     // Arrange
@@ -53,7 +48,7 @@ module BetsTests =
                |> ``with a Score`` { Home = homeScore; Away = awayScore }
     let bet = Bets.create betId game.GameId userId scorePredicted typedScorer
     // Act
-    let (BetResult points) = bet |> Bets.finishBet PointsToWin game
+    let (BetResult points) = bet |> Bets.finishBet game
     // Assert 
     points |> should equal expectedPointsEarned
     
@@ -69,9 +64,9 @@ module BetsTests =
     let notPredictedScore = { Home = 3; Away = 0 }
     let bet = Bets.create betId game.GameId userId notPredictedScore predictedScorer
     // Act
-    let (BetResult points) = bet |> Bets.finishBet PointsToWin game
+    let (BetResult points) = bet |> Bets.finishBet game
     // Assert 
-    points |> should equal PointsToWin.PointsForCorrectScorer
+    points |> should equal game.Tournament.Settings.PointsForCorrectScorer
     
   [<Fact>]
   let ``Calculates 0 points when bet not predicting anything`` () =
@@ -84,6 +79,6 @@ module BetsTests =
     let notPredictedScore = { Home = 3; Away = 0 }
     let bet = Bets.create betId game.GameId userId notPredictedScore predictedScorer
     // Act
-    let (BetResult points) = bet |> Bets.finishBet PointsToWin game
+    let (BetResult points) = bet |> Bets.finishBet game
     // Assert 
     points |> should equal 0

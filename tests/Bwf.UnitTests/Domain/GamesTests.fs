@@ -23,7 +23,7 @@ module GamesTests =
     game |> should not' (be Null)
     game.HomeId |> should equal homeTeam.TeamId
     game.AwayId |> should equal awayTeam.TeamId
-    game.TournamentId |> should equal tournament.TournamentId
+    game.Tournament |> should equal tournament
     game.StartDate |> should equal startDate
     
   [<Fact>]
@@ -40,6 +40,6 @@ module GamesTests =
     let finishedGame = game |> Games.finish points endDate
     // Assert
     finishedGame |> should not' (be Null)
-    finishedGame.TournamentId |> should equal tournament.TournamentId
+    finishedGame.Tournament |> should equal tournament
     finishedGame.EndDate |> should equal endDate
-    finishedGame.Points |> should equal points
+    finishedGame.Result |> should equal { Points = points }

@@ -3,22 +3,25 @@
 open System
 open Bwf
 open Some_Points
+open A_Tournament
 
 module A_Game_Finished =
   let ``a Finished Game`` () =
     { GameId = Guid.NewGuid() |> GameId
-      TournamentId = Guid.NewGuid() |> TournamentId
+      Tournament = ``a tournament``()
       EndDate = DateTime.Now
-      Points = [] }
+      Result = { Points = [] } }
     
-  let ``with some Points`` points game =
-    { game with Points = points }  
+  let ``with some Points`` points (game: FinishedGame) =
+    let result = { Points = points }
+    { game with Result = result }  
     
-  let ``with a Score`` (score: Score) game =
+  let ``with a Score`` (score: Score) (game: FinishedGame) =
     let points = score.Home
                  |> ``some Points`` TeamSide.Home
                  |> List.append (``some Points`` TeamSide.Away score.Away)
-    { game with Points = points }
+    let result = { Points = points }
+    { game with Result = result } 
     
   let ``as a Game`` game =
     game |> Game.Finished

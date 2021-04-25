@@ -31,7 +31,3 @@ type FinishGame =
   { GameId: GameId
     Points: Point list
     EndDate: DateTime }
-  
-type CreateTournament =
-  { TournamentName: string
-    StartDate: DateTime }

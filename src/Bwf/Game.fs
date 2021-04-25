@@ -9,10 +9,18 @@ type TeamSide =
 type Point =
   { PlayerId: PlayerId
     TeamSide: TeamSide }
+  
+type Result =
+  { Points: Point list }
+  member this.Score =
+    let home, away = this.Points |> List.partition (fun point -> point.TeamSide = TeamSide.Home)
+    { Home = home.Length; Away = away.Length}
+  member this.ScoredPlayers =
+    this.Points |> List.map (fun point -> point.PlayerId) |> List.distinct
 
 type NotStartedGame = {
   GameId: GameId
-  TournamentId: TournamentId
+  Tournament: Tournament
   HomeId: TeamId
   AwayId: TeamId
   StartDate: DateTime
@@ -20,15 +28,10 @@ type NotStartedGame = {
 
 type FinishedGame = {
   GameId: GameId
-  TournamentId: TournamentId
+  Tournament: Tournament
   EndDate: DateTime
-  Points: Point list
-} with
-  member this.Score =
-    let home, away = this.Points |> List.partition (fun point -> point.TeamSide = TeamSide.Home)
-    { Home = home.Length; Away = away.Length}
-  member this.ScoredPlayers =
-    this.Points |> List.map (fun point -> point.PlayerId) |> List.distinct
+  Result: Result
+} 
 
 type Game =
   | NotStarted of NotStartedGame
@@ -37,13 +40,13 @@ type Game =
 module Games =
   let create (home: Team) (away: Team) startDate (tournament: Tournament) =
     { GameId = Guid.NewGuid() |> GameId
-      TournamentId = tournament.TournamentId
+      Tournament = tournament
       HomeId = home.TeamId
       AwayId = away.TeamId
       StartDate = startDate }
   
   let finish points endDate (game: NotStartedGame) =
     { GameId = game.GameId
-      TournamentId = game.TournamentId
+      Tournament = game.Tournament
       EndDate = endDate
-      Points = points }
+      Result = { Points = points } }

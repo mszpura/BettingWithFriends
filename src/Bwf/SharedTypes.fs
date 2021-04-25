@@ -38,10 +38,17 @@ type Team =
     TournamentId: TournamentId
     Name: NotEmptyString }
         
+type TournamentSettings =
+  { PointsForCorrectWinner: int
+    PointsForCorrectScorer: int
+    PointsForCorrectGameScore: int
+    PointsForTypedTopScorer: int }
+        
 type Tournament =
   { TournamentId: TournamentId
     Name: NotEmptyString
-    StartDate: DateTime }
+    StartDate: DateTime
+    Settings: TournamentSettings }
     
 module NotEmptyString =
   let create string =

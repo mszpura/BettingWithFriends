@@ -1,10 +1,5 @@
 ﻿namespace Bwf
 
-type PointsToWin =
-  { PointsForCorrectWinner: int
-    PointsForCorrectScorer: int
-    PointsForCorrectGameScore: int }
-
 type Bet =
   { BetId: BetId
     GameId: GameId
@@ -22,21 +17,22 @@ module Bets =
       TypedScore = typedScore
       TypedScorerId = typedScorerId }  
     
-  let private calculatePointsForTypedScorer pointsForTypedTopScorer (finishedGame: FinishedGame) bet =
-    let player = finishedGame.ScoredPlayers |> List.tryFind (fun playerId -> playerId = bet.TypedScorerId)
+  let private calculatePointsForTypedScorer (finishedGame: FinishedGame) bet =
+    let player = finishedGame.Result.ScoredPlayers |> List.tryFind (fun playerId -> playerId = bet.TypedScorerId)
     match player with
-    | Some _ ->  pointsForTypedTopScorer
+    | Some _ ->  finishedGame.Tournament.Settings.PointsForCorrectScorer
     | None -> 0
     
-  let private calculatePointsForTypedScore pointsForTypedScore (finishedGame: FinishedGame) bet =
-    if bet.TypedScore = finishedGame.Score then pointsForTypedScore else 0
+  let private calculatePointsForTypedScore (finishedGame: FinishedGame) bet =
+    if bet.TypedScore =
+      finishedGame.Result.Score then finishedGame.Tournament.Settings.PointsForCorrectGameScore else 0
     
-  let private calculatePointsForTypedWinner pointsForTypedWinner (finishedGame: FinishedGame) bet =
-    if bet.TypedScore.Winner = finishedGame.Score.Winner then pointsForTypedWinner else 0
+  let private calculatePointsForTypedWinner (finishedGame: FinishedGame) bet =
+    if bet.TypedScore.Winner =
+      finishedGame.Result.Score.Winner then finishedGame.Tournament.Settings.PointsForCorrectWinner else 0
     
-  let finishBet pointsToEarn finishedGame bet =
-    let points = calculatePointsForTypedWinner pointsToEarn.PointsForCorrectWinner finishedGame bet +
-                 calculatePointsForTypedScore pointsToEarn.PointsForCorrectGameScore finishedGame bet +
-                 calculatePointsForTypedScorer pointsToEarn.PointsForCorrectScorer finishedGame bet
+  let finishBet finishedGame bet =
+    let points = calculatePointsForTypedWinner finishedGame bet +
+                 calculatePointsForTypedScore finishedGame bet +
+                 calculatePointsForTypedScorer finishedGame bet
     points |> BetResult
-    
