@@ -18,7 +18,8 @@
       <Compile Include="Commands\A_JoinToGroupCommand.fs" />
       <Compile Include="Commands\An_AddTopScorerCommand.fs" />
       <Compile Include="Commands\A_CreateGameCommand.fs" />
-      <Compile Include="Commands\A_FinishedGameCommand.fs" />
+      <Compile Include="Commands\A_FinishGameCommand.fs" />
+      <Compile Include="Commands\A_CreateBetCommand.fs" />
     </ItemGroup>
 
     <ItemGroup>

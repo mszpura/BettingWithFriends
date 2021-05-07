@@ -31,3 +31,9 @@ type FinishGame =
   { GameId: GameId
     Points: Point list
     EndDate: DateTime }
+  
+type CreateBet =
+  { GameId: GameId
+    UserId: UserId
+    Score: Score
+    ScorerId: PlayerId }

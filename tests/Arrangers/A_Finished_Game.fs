@@ -23,5 +23,8 @@ module A_Finished_Game =
     let result = { Points = points }
     { game with Result = result } 
     
+  let ``with Game Id`` gameId (game: FinishedGame) =
+    { game with GameId = gameId }
+  
   let ``as a Game`` game =
     game |> Game.Finished

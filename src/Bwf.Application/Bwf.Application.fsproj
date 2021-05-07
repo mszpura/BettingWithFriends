@@ -12,6 +12,7 @@
       <Compile Include="CommandHandlers\AddTopScorerHandler.fs" />
       <Compile Include="CommandHandlers\CreateGameHandler.fs" />
       <Compile Include="CommandHandlers\FinishGameHandler.fs" />
+      <Compile Include="CommandHandlers\CreateBetHandler.fs" />
     </ItemGroup>
 
     <ItemGroup>
